@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model MVC_CRUD.Models.BookViewModel
+
+@{
+}
+
+<h1>Add book</h1>
+<form method="post" action="Add" class="mt-5">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name"  asp-for="Name">
+    </div>
+    <div class="form-group">
+        <label for="author">Author</label>
+        <input type="text" class="form-control" id="author" asp-for="Author" >
+    </div>
+    <div class="form-group">
+        <label for="publishingHouse">Publishing house</label>
+        <input type="text" class="form-control" id="publishingHouse" asp-for="PublishingHouse">
+    </div>
+    <div class="form-group">
+        <label for="yearOfPublishment">Year of publishment</label>
+        <input type="number" class="form-control" id="yearOfPublishment" asp-for="YearOfPublishment">
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Add new book</button>
+</form>

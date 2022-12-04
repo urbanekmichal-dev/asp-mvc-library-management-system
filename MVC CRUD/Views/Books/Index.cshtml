@@ -1,0 +1,31 @@
+﻿
+@model List<MVC_CRUD.Models.Domain.Book>
+@{
+}
+
+<h1>Books</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Publishing house</th>
+            <th>Year of publishment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Name</td>
+                <td>@book.Author</td>
+                <td>@book.PublishingHouse</td>
+                <td>@book.YearOfPublishment</td>
+                <td><a href="Books/View/@book.Id">View</a></td>
+                <td><a href="Books/Delete/@book.Id">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

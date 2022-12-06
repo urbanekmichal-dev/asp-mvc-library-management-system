@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MVC_CRUD.Views.Books
+namespace MVC_CRUD.Views.Users
 {
     public class ViewModel : PageModel
     {

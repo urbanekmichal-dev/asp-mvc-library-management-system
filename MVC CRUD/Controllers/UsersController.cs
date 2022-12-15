@@ -3,6 +3,7 @@ using MVC_CRUD.Data;
 using MVC_CRUD.Models.Domain;
 using MVC_CRUD.Models;
 using System.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MVC_CRUD.Controllers
 {
@@ -13,6 +14,11 @@ namespace MVC_CRUD.Controllers
         public UsersController(MVCDbContext mvcDbContext)
         {
             this.dbContext = mvcDbContext;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var users = await dbContext.Users.ToListAsync();
+            return View(users);
         }
         public IActionResult Add()
         {
@@ -35,7 +41,9 @@ namespace MVC_CRUD.Controllers
 
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Books");
         }
+
+       
     }
 }

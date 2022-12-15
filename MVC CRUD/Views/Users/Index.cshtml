@@ -1,0 +1,33 @@
+﻿
+@model List<MVC_CRUD.Models.Domain.User>
+@{
+}
+
+<h1>Books</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Date of birth</th>
+            <th>Login</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                <td>@user.DateOfBirth</td>
+                <td>@user.Login</td>
+                <td><a href="Books/View/@user.Id">View</a></td>
+                <td><a href="Books/Delete/@user.Id">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

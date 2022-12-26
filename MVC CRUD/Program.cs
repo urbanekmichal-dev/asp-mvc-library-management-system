@@ -1,12 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using MVC_CRUD.Data;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<MVCDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("MvcConnectionString")));
+string connectionString = builder.Configuration.GetConnectionString("MvcConnectionString");
+
+builder.Services.AddDbContext<MVCDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MVCDbContext>();
+
+
 
 var app = builder.Build();
 
@@ -22,6 +30,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 

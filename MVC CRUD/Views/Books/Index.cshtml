@@ -4,7 +4,7 @@
 }
 
 <h1>Books</h1>
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>Id</th>
@@ -21,11 +21,46 @@
                 <td>@book.Id</td>
                 <td>@book.Name</td>
                 <td>@book.Author</td>
-                <td>@book.PublishingHouse</td>
-                <td>@book.YearOfPublishment</td>
+      
                 <td><a href="Books/View/@book.Id">View</a></td>
                 <td><a href="Books/Delete/@book.Id">Delete</a></td>
             </tr>
         }
     </tbody>
 </table>
+*@
+
+<div class="container-md">
+    <div class="container">
+        <div class="row justify-content-center">
+             @foreach (var book in Model)
+        {
+            <div class="col-md-3">
+                <div class="card" style="width: 15rem;">
+                    <img class="card-img-top"
+                         src="@("/Image/"+book.Image)"
+                         alt="Card image cap">
+                    <div class="card-body">
+                            <h5 class="card-title">  <a href="" class="card-link">@book.Name</a></h5>
+                        <p class="card-text">
+                            Some quick example text to build on the card title and make up the bulk of
+                            the card's content.
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Author: @book.Author</li>
+                            <li class="list-group-item">Published: @book.Published.ToString("dd-MM-yyyy")</li>
+                        <li class="list-group-item">Publisher: @book.Publisher</li>
+                    </ul>
+                    <div class="card-body">
+                            <a asp-controller="Reservation" asp-action="AddReservation" class="card-link">Reserve</a>
+
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+   
+</div>

@@ -5,40 +5,118 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Login</h1>
+    <style>
+        body {
+            background: #f6f9fc;
+        }
 
-<h4>LoginViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+        .account-block {
+            padding: 0;
+            background-image: url('/image/login.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+            position: relative;
+        }
+
+            .account-block .overlay {
+                -webkit-box-flex: 1;
+                -ms-flex: 1;
+                flex: 1;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            .account-block .account-testimonial {
+                text-align: center;
+                color: #fff;
+                position: absolute;
+                margin: 0 auto;
+                padding: 0 1.75rem;
+                bottom: 3rem;
+                left: 0;
+                right: 0;
+            }
+
+        .text-theme {
+            color: #5369f8 !important;
+        }
+
+        .btn-theme {
+            background-color: #5369f8;
+            border-color: #5369f8;
+            color: #fff;
+        }
+    </style>
+
+
+    <!--login-->
+    <div id="main-wrapper" class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="card border-0">
+                    <div class="card-body p-0">
+                        <div class="row no-gutters">
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="mb-5">
+                                        <h3 class="h4 font-weight-bold text-theme">Login</h3>
+                                    </div>
+                                    <h6 class="h5 mb-0">Just Do Login.</h6>
+                                    <p class="text-muted mt-2 mb-5">If You Really Want To Know, Look In The Login.</p>
+                                    <form asp-action="Login">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label asp-for="Email" class="control-label"></label>
+                                            <input asp-for="Email" class="form-control" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="Password" class="control-label"></label>
+                                            <input asp-for="Password" class="form-control" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group form-check">
+                                            <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
+                                            </label>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-theme">Login</button>
+                                    </form>
+                                <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a asp-controller="Account" asp-action="Register" class="text-primary ml-1">register</a></p>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-none d-lg-inline-block">
+                                <div class="account-block rounded-right">
+                                    <div class="overlay rounded-right"></div>
+                                    <div class="account-testimonial">
+                                        <h4 class="text-white mb-4">This beautiful theme yours!</h4>
+                                        <p class="lead text-white">"Best investment i made for a long time. Can only recommend it for other users."</p>
+                                        <p>- Admin User</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card-body -->
+                </div>
+                <!-- end card -->
+                <!-- end row -->
             </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+            <!-- end col -->
+        </div>
+        <!-- Row -->
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC_CRUD.Models;
+using MVC_CRUD.Models.Domain;
 
 namespace MVC_CRUD.Controllers
 {
@@ -9,12 +10,15 @@ namespace MVC_CRUD.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(UserManager<IdentityUser> userManager,
-                              SignInManager<IdentityUser> signInManager)
+                              SignInManager<IdentityUser> signInManager,
+                              RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -32,19 +36,24 @@ namespace MVC_CRUD.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
+                var user = new User
                 {
                     UserName = model.Email,
                     Email = model.Email,
+                    FirstName = "Michaltest",
+                    LastName="Urbanektest",
                     
                 };
+
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
+                    //await _roleManager.CreateAsync(new IdentityRole("USER"));
+                    //await _roleManager.CreateAsync(new IdentityRole("ADMIN"));
                     await _signInManager.SignInAsync(user, isPersistent: false);
-
+                    await _userManager.AddToRoleAsync(user, "USER");
                     return RedirectToAction("index", "Home");
                 }
 
@@ -72,9 +81,11 @@ namespace MVC_CRUD.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, false);
+                
 
                 if (result.Succeeded)
                 {
+
                     return RedirectToAction("Index", "Home");
                 }
 

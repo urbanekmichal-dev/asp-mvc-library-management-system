@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if edit %}
+<form action="/reservations/update/{{id}}/" method="post">
+    {% else %}
+    <form action="/reservations/add/" method="post">
+        {% endif %}
+    {% csrf_token %}
+    {{ form.as_p  }}
+        {% if edit %}
+    <input type="submit" value="Update reservation">
+         {% else %}
+         <input type="submit" value="Add reservation">
+        {% endif %}
+</form>
+    {% endblock content %}

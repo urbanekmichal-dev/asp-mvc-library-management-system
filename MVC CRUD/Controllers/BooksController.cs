@@ -4,15 +4,18 @@ using MVC_CRUD.Data;
 using MVC_CRUD.Models;
 using MVC_CRUD.Models.Domain;
 
+
 namespace MVC_CRUD.Controllers
 {
     public class BooksController : Controller
 
     {
         private readonly MVCDbContext dbContext;
-        public BooksController(MVCDbContext mvcDbContext)
+        private readonly IWebHostEnvironment hostEnvironment;
+        public BooksController(MVCDbContext mvcDbContext, IWebHostEnvironment hostEnvironment )
         {
             this.dbContext = mvcDbContext;
+            this.hostEnvironment = hostEnvironment;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -23,17 +26,17 @@ namespace MVC_CRUD.Controllers
         [HttpGet]
         public async Task<IActionResult> View(Guid id)
         {
-            var book =await dbContext.Books.FirstOrDefaultAsync(x => x.Id == id);
+            var book =await dbContext.Books.FirstOrDefaultAsync(x => x.BookId == id);
 
             if(book!=null)
             {
                 var viewModel = new UpdateBookModel()
                 {
-                    Id = book.Id,
+                    Id = book.BookId,
                     Name = book.Name,
                     Author = book.Author,
-                    PublishingHouse = book.PublishingHouse,
-                    YearOfPublishment = book.YearOfPublishment,
+                  //  PublishingHouse = book.PublishingHouse,
+                   // YearOfPublishment = book.YearOfPublishment,
                 };
                 return await Task.Run(() => View("View",viewModel));
             }
@@ -44,7 +47,7 @@ namespace MVC_CRUD.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var book = await dbContext.Books.FirstOrDefaultAsync(x => x.Id == id);
+            var book = await dbContext.Books.FirstOrDefaultAsync(x => x.BookId == id);
 
             if (book != null)
             {
@@ -61,21 +64,43 @@ namespace MVC_CRUD.Controllers
             return View();
         }
         [HttpPost]
-        public async Task< IActionResult> Add(BookViewModel addBookRequest)
+        public async Task<IActionResult> Add(BookViewModel addBookRequest)
         {
             var book = new Book()
             {
-                Id = Guid.NewGuid(),
+                BookId = Guid.NewGuid(),
                 Name = addBookRequest.Name,
                 Author = addBookRequest.Author,
-                PublishingHouse = addBookRequest.PublishingHouse,
-                YearOfPublishment = addBookRequest.YearOfPublishment,
+                Publisher = addBookRequest.Publisher,
+                Published = addBookRequest.Published.Date,
+                Category = addBookRequest.Category,
+                Description = addBookRequest.Description,
+                Visible = addBookRequest.Visible
             };
+
+            string wwwRootPath = hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(addBookRequest.Image.FileName);
+            string extension = Path.GetExtension(addBookRequest.Image.FileName);
+            string imageName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            string path = Path.Combine(wwwRootPath + "/Image", imageName);
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await addBookRequest.Image.CopyToAsync(fileStream);
+            }
+            book.Image = imageName;
+
+
 
             await dbContext.Books.AddAsync(book);
             await dbContext.SaveChangesAsync();
+
+
+
             return RedirectToAction("Index");
         }
+
+
         [HttpPost]
         public async Task<IActionResult> View(UpdateBookModel updateBookModel)
         {
@@ -85,13 +110,15 @@ namespace MVC_CRUD.Controllers
             {
                 book.Name = updateBookModel.Name;
                 book.Author = updateBookModel.Author;
-                book.PublishingHouse = updateBookModel.PublishingHouse;
-                book.YearOfPublishment = updateBookModel.YearOfPublishment;
+               // book.PublishingHouse = updateBookModel.PublishingHouse;
+                //book.YearOfPublishment = updateBookModel.YearOfPublishment;
                await dbContext.SaveChangesAsync();
             }
 
 
             return RedirectToAction("Index");
         }
+
+
     }
 }

@@ -1,14 +1,15 @@
-﻿namespace MVC_CRUD.Models.Domain
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MVC_CRUD.Models.Domain
 {
-    public class User
+    public class User : IdentityUser
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        [NotMapped]
+        public Guid UserId { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }
+
     }
 }

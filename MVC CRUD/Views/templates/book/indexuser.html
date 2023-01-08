@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container-md">
+    {% if books_list %}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for b in books_list %}
+            <div class="col-md-3">
+                <div class="card" style="width: 15rem;">
+                    <img class="card-img-top"
+                         src="{{b.image.url}}"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">  <a href="{% url 'get_book' b.id %}" class="card-link">{{b.name}}</a></h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Author: {{b.author}}</li>
+                        <li class="list-group-item">Published: {{b.published}}</li>
+                        <li class="list-group-item">Publisher: {{b.publisher}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="{% url 'reserve_book' b.id %}" class="card-link">Reserve</a>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!--pagination-->
+    {{books_list}}
+    {%if books_list.has_previous %}
+    <a href="?page=1">&laquo First</a>
+    <a href="?page={{ books_list.previous_page_number }}">Previous</a>
+    {% endif %}
+    {% if books_list.has_next %}
+    <a href="?page={{ books_list.next_page_number }}">Next</a>
+    <a href="?page={{books_list.paginator.num_pages }}">Last &raquo</a>
+    {% endif %}
+    {% else %}
+    <p>No books are available.</p>
+    {% endif %}
+    <!--end pagination   -->
+</div>
+
+{% endblock content %}

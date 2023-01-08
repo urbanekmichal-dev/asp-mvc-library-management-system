@@ -19,14 +19,14 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td>@user.Id</td>
-                <td>@user.Name</td>
+                <td>@user.UserId</td>
+@*                <td>@user.Name</td>
                 <td>@user.LastName</td>
                 <td>@user.Email</td>
                 <td>@user.DateOfBirth</td>
-                <td>@user.Login</td>
-                <td><a href="Books/View/@user.Id">View</a></td>
-                <td><a href="Books/Delete/@user.Id">Delete</a></td>
+                <td>@user.Login</td>*@
+                <td><a href="Books/View/@user.UserId">View</a></td>
+                <td><a href="Books/Delete/@user.UserId">Delete</a></td>
             </tr>
         }
     </tbody>

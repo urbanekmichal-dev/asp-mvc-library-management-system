@@ -37,13 +37,13 @@
 
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Hello, @User.Identity.Name [USER]</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Details">Hello, @User.Identity.Name [USER]</a>
                                 </li>
                                
                                 
                             </ul>
                         }
-                        else
+                        else 
                         {
                             <ul class="navbar-nav flex-grow-1">
                                
@@ -51,19 +51,19 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Add">Add book</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Books</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="IndexAdmin">Books</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Users</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="AddReservation">Reservations</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Reservation" asp-action="IndexAdmin">Reservations</a>
                                 </li>
                                
                             </ul>
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Hello, @User.Identity.Name [ADMIN]</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Details">Hello, @User.Identity.Name [ADMIN]</a>
                                 </li>
                             </ul>
 
@@ -74,7 +74,7 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                                 </li>
                             </ul>
-                        
+                            
                     }
                     else
                     {
@@ -90,8 +90,18 @@
 
 
                 </div>
+               
             </div>
+
         </nav>
+
+
+        @if(TempData["alertMessage"]!=null)
+        {
+            <div class="alert alert-success">
+            <strong> @TempData["alertMessage"]</strong>
+            </div>
+        }
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -101,10 +111,10 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - Library Management System - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Library Management System</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

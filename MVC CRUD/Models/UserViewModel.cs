@@ -1,31 +1,22 @@
 ﻿
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVC_CRUD.Models
 {
     public class UserViewModel
     {
-        [Required(ErrorMessage = "Name is required!")]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
-        [Required(ErrorMessage = "Last name is required!")]
-        [Display(Name = "Last name")]
+        [NotMapped]
+        public Guid UserId { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Email is required!")]
-        [Display(Name = "Email")]
+        public string Phone { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+        public IFormFile Image { get; set; }
         public string Email { get; set; }
-        [Required(ErrorMessage = "Birth date is required!")]
-        [Display(Name = "Birth date")]
-        [DataType(DataType.Date)]
-        public DateTime DateOfBirth { get; set; }
-        [Required(ErrorMessage = "Login is required!")]
-        [Display(Name = "Login")]
-        public string Login { get; set; }
-        [Required(ErrorMessage = "Password is required!")]
-        [Display(Name = "Password")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-        public string Role { get; set; }
     }
 }

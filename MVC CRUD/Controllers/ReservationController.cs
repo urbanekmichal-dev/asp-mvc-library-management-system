@@ -20,8 +20,16 @@ namespace MVC_CRUD.Controllers
         // GET: HomeController1
         public async Task<IActionResult> Index()
         {
-            var reservations = await dbContext.Reservations.Include(n=> n.Book).Include(k=> k.User).ToListAsync();
+            string userName = User.Identity.Name;
+            var reservations = await dbContext.Reservations.Include(n=> n.Book).Include(k=> k.User).Where(r=>r.User.UserName== userName).ToListAsync();
            
+            return View(reservations);
+        }
+
+        public async Task<IActionResult> IndexAdmin()
+        {
+            string userName = User.Identity.Name;
+            var reservations = await dbContext.Reservations.Include(n => n.Book).Include(k => k.User).ToListAsync();
             return View(reservations);
         }
 
@@ -49,22 +57,28 @@ namespace MVC_CRUD.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddReservation()
+        public async Task<IActionResult> AddReservation(Guid id)
         {
             string userName = User.Identity.Name;
             var user = dbContext.Users.Where(u => u.UserName == userName).FirstOrDefault();
-            var book = dbContext.Books.Where(u => u.Name == "test").FirstOrDefault();
+            var book = dbContext.Books.Where(u => u.BookId == id).FirstOrDefault();
 
             var reservation = new Reservation()
             {
                 ReservationId = Guid.NewGuid(),
                 User = user,
-                Book = book
+                Book = book,
+                startDate = DateTime.Today,
+                endDate = DateTime.Today.AddDays(14),
+                daysLeft = 14,
+                is_finished = false
+
             };
-            
+
+            book.Visible = false;
+            book.Name = "test1";
 
             await dbContext.Reservations.AddAsync(reservation);
-
             await dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }

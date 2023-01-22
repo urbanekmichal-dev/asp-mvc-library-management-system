@@ -41,8 +41,10 @@ namespace MVC_CRUD.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     FirstName = "Michaltest",
-                    LastName="Urbanektest",
-                    
+                    LastName = "Urbanektest",
+                    LockoutEnd = DateTime.Now.AddDays(365),
+                    LockoutEnabled = false,
+                    Image="defaultAvatar.png"
                 };
 
 

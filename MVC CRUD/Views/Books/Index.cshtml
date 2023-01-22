@@ -4,32 +4,13 @@
 }
 
 <h1>Books</h1>
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Author</th>
-            <th>Publishing house</th>
-            <th>Year of publishment</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var book in Model)
-        {
-            <tr>
-                <td>@book.Id</td>
-                <td>@book.Name</td>
-                <td>@book.Author</td>
-      
-                <td><a href="Books/View/@book.Id">View</a></td>
-                <td><a href="Books/Delete/@book.Id">Delete</a></td>
-            </tr>
-        }
-    </tbody>
-</table>
-*@
+<style>
+    .card img {
+       height: 20rem;
+       object-fit: cover;
+}
 
+</style>
 <div class="container-md">
     <div class="container">
         <div class="row justify-content-center">
@@ -41,10 +22,9 @@
                          src="@("/Image/"+book.Image)"
                          alt="Card image cap">
                     <div class="card-body">
-                            <h5 class="card-title">  <a href="" class="card-link">@book.Name</a></h5>
+                            <h5 class="card-title">  <a href="@Url.Action("View", "Books",new {id=@book.BookId})" class="card-link">@book.Name</a></h5>
                         <p class="card-text">
-                            Some quick example text to build on the card title and make up the bulk of
-                            the card's content.
+                           @book.Description
                         </p>
                     </div>
                     <ul class="list-group list-group-flush">
@@ -53,8 +33,7 @@
                         <li class="list-group-item">Publisher: @book.Publisher</li>
                     </ul>
                     <div class="card-body">
-                            <a asp-controller="Reservation" asp-action="AddReservation" class="card-link">Reserve</a>
-
+                            <button type="submit" onclick="location.href='@Url.Action("AddReservation", "Reservation",new {id=@book.BookId})'" id="submit" name="submit" class="btn btn-primary ">Reserve</button>
                     </div>
                 </div>
             </div>

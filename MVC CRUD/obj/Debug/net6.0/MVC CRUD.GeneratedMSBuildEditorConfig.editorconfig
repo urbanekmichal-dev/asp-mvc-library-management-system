@@ -27,8 +27,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcQWRkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Books/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Books/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Books/IndexAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcSW5kZXhBZG1pbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Books/View.cshtml]
@@ -47,6 +55,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Reservation/IndexAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cSW5kZXhBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -55,24 +67,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Users/Add.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQWRkLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Users/Add2.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQWRkMi5jc2h0bWw=
+[C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Users/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Users/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Users/Signin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcU2lnbmluLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/Users/Signin1.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcU2lnbmluMS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/urban/OneDrive/Desktop/.NET/lab ASP .NET MVC/MVC CRUD/MVC CRUD/Views/_ViewImports.cshtml]

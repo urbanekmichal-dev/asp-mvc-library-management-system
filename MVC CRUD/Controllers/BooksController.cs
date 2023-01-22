@@ -20,6 +20,12 @@ namespace MVC_CRUD.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var books = await dbContext.Books.Where(b => b.Visible == true).ToListAsync();
+            return View(books);
+        }
+        [HttpGet]
+        public async Task<IActionResult> IndexAdmin()
+        {
             var books = await dbContext.Books.ToListAsync();
             return View(books);
         }
@@ -30,17 +36,8 @@ namespace MVC_CRUD.Controllers
 
             if(book!=null)
             {
-                var viewModel = new UpdateBookModel()
-                {
-                    Id = book.BookId,
-                    Name = book.Name,
-                    Author = book.Author,
-                  //  PublishingHouse = book.PublishingHouse,
-                   // YearOfPublishment = book.YearOfPublishment,
-                };
-                return await Task.Run(() => View("View",viewModel));
+                return await Task.Run(() => View("View",book));
             }
-
 
             return RedirectToAction("Index");
         }
@@ -55,7 +52,7 @@ namespace MVC_CRUD.Controllers
                 await dbContext.SaveChangesAsync();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexAdmin");
         }
 
         [HttpGet]
@@ -90,33 +87,53 @@ namespace MVC_CRUD.Controllers
             }
             book.Image = imageName;
 
-
-
             await dbContext.Books.AddAsync(book);
             await dbContext.SaveChangesAsync();
-
-
-
             return RedirectToAction("Index");
         }
 
-
-        [HttpPost]
-        public async Task<IActionResult> View(UpdateBookModel updateBookModel)
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var book = await dbContext.Books.FindAsync(updateBookModel.Id);
-
+            var book = await dbContext.Books.FirstOrDefaultAsync(x => x.BookId == id);
             if (book != null)
             {
-                book.Name = updateBookModel.Name;
-                book.Author = updateBookModel.Author;
-               // book.PublishingHouse = updateBookModel.PublishingHouse;
-                //book.YearOfPublishment = updateBookModel.YearOfPublishment;
-               await dbContext.SaveChangesAsync();
+                return await Task.Run(() => View("Edit", book));
+            }
+
+            return RedirectToAction("IndexAdmin");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(Book addBookRequest)
+        {
+            var book = await dbContext.Books.FirstOrDefaultAsync(x => x.BookId == addBookRequest.BookId);
+            if (book != null)
+            {
+
+                book.Name = addBookRequest.Name;
+                book.Author = addBookRequest.Author;
+                book.Published = addBookRequest.Published;
+                book.Publisher = addBookRequest.Publisher;
+                book.Category = addBookRequest.Category;
+                book.Description = addBookRequest.Description;
+                book.Visible = addBookRequest.Visible;
+
+                await dbContext.SaveChangesAsync();
             }
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexAdmin");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ChangeVisibility(Guid id)
+        {
+            var book = await dbContext.Books.FirstOrDefaultAsync(x => x.BookId == id);
+            if (book != null)
+            {
+                book.Visible = true;
+                await dbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("IndexAdmin");
         }
 
 

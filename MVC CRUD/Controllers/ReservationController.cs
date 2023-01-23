@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVC_CRUD.Data;
@@ -8,6 +9,7 @@ using System;
 
 namespace MVC_CRUD.Controllers
 {
+    [Authorize]
     public class ReservationController : Controller
     {
         private readonly MVCDbContext dbContext;
@@ -21,8 +23,8 @@ namespace MVC_CRUD.Controllers
         public async Task<IActionResult> Index()
         {
             string userName = User.Identity.Name;
-            var reservations = await dbContext.Reservations.Include(n=> n.Book).Include(k=> k.User).Where(r=>r.User.UserName== userName).ToListAsync();
-           
+            var reservations = await dbContext.Reservations.Include(n => n.Book).Include(k => k.User).Where(r => r.User.UserName == userName).ToListAsync();
+
             return View(reservations);
         }
 
@@ -48,13 +50,32 @@ namespace MVC_CRUD.Controllers
         [HttpGet]
         public async Task<IActionResult> ReturnBook(Guid id)
         {
-            var resevation = dbContext.Reservations.Include(n=>n.Book).Where(u => u.ReservationId == id).FirstOrDefault();
+            var resevation = dbContext.Reservations.Include(n => n.Book).Where(u => u.ReservationId == id).FirstOrDefault();
+            resevation.BookState = BookState.Pending;
             resevation.is_finished = true;
-            resevation.Book.Visible = true;
 
             await dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeState(Guid id)
+        {
+            var resevation = dbContext.Reservations.Include(n => n.Book).Where(u => u.ReservationId == id).FirstOrDefault();
+            if (resevation.BookState == BookState.Pending && resevation.is_finished == false)
+            {
+                resevation.BookState = BookState.Ongoing;
+            }
+            else
+            {
+                resevation.BookState = BookState.Finished;
+                resevation.Book.Visible = true;
+            }
+
+            await dbContext.SaveChangesAsync();
+            return RedirectToAction("IndexAdmin");
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> AddReservation(Guid id)
@@ -71,8 +92,8 @@ namespace MVC_CRUD.Controllers
                 startDate = DateTime.Today,
                 endDate = DateTime.Today.AddDays(14),
                 daysLeft = 14,
-                is_finished = false
-
+                is_finished = false,
+                BookState = BookState.Pending
             };
 
             book.Visible = false;
@@ -120,9 +141,18 @@ namespace MVC_CRUD.Controllers
         }
 
         // GET: HomeController1/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return View();
+            var reservation = await dbContext.Reservations.FirstOrDefaultAsync(x => x.ReservationId == id);
+
+            if (reservation != null)
+            {
+                dbContext.Reservations.Remove(reservation);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return RedirectToAction("IndexAdmin");
         }
 
         // POST: HomeController1/Delete/5

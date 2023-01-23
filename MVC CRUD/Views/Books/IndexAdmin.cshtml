@@ -327,7 +327,7 @@
                                         </td>
                                         <td>
                                             <div class="r-no">
-                                                <span>@book.Description</span>
+                                                <span>@book.Description...</span>
                                             </div>
                                         </td>
                                         <td>
@@ -340,11 +340,11 @@
                                                 <button type="submit" onclick="location.href='@Url.Action("Edit", "Books",new {id=@book.BookId})'" id="submit" name="submit" class="btn btn-secondary ">Edit</button>
                                                 <button type="submit" onclick="location.href='@Url.Action("Delete", "Books",new {id=@book.BookId})'" id="submit" name="submit" class="btn btn-primary ">Delete</button>
                                                @if(book.Visible){
-                                                 <button type="submit" onclick="location.href='@Url.Action("ChangeVisibility", "Books",new {id=@book.BookId})'" id="submit" name="submit" class="btn btn-danger ">Deactivate</button>
+                                                        <button type="submit" onclick="location.href='@Url.Action("ChangeVisibility", "Books",new {id=@book.BookId})'" id="submit" name="submit" class="btn btn-danger ">Deactivate</button>
                                                }
                                                else
                                                {
-                                                 <button type="submit" onclick="location.href='@Url.Action("ChangeVisibility", "Books",new {id=@book.BookId})'" id="submit" name="submit" class="btn btn-warning ">Activate</button>
+                                                     <button type="submit" onclick="location.href='@Url.Action("ChangeVisibility", "Books",new {id=@book.BookId})'" id="submit" name="submit" class="btn btn-success ">Activate</button>
                                                }
 
                                             </div>

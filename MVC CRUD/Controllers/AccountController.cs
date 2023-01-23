@@ -8,12 +8,12 @@ namespace MVC_CRUD.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<IdentityUser> userManager,
-                              SignInManager<IdentityUser> signInManager,
+        public AccountController(UserManager<User> userManager,
+                              SignInManager<User> signInManager,
                               RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
@@ -40,11 +40,9 @@ namespace MVC_CRUD.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    FirstName = "Michaltest",
-                    LastName = "Urbanektest",
-                    LockoutEnd = DateTime.Now.AddDays(365),
-                    LockoutEnabled = false,
-                    Image="defaultAvatar.png"
+                    FirstName = "",
+                    LastName = "",
+                    Image = "defaultAvatar.png"
                 };
 
 
@@ -54,9 +52,11 @@ namespace MVC_CRUD.Controllers
                 {
                     //await _roleManager.CreateAsync(new IdentityRole("USER"));
                     //await _roleManager.CreateAsync(new IdentityRole("ADMIN"));
-                    await _signInManager.SignInAsync(user, isPersistent: false);
                     await _userManager.AddToRoleAsync(user, "USER");
-                    return RedirectToAction("index", "Home");
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    TempData["alertMessage"] = "Thanks for registration. Wait for activation by administrator";
+                    return View();
+
                 }
 
                 foreach (var error in result.Errors)
@@ -83,7 +83,7 @@ namespace MVC_CRUD.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, false);
-                
+
 
                 if (result.Succeeded)
                 {

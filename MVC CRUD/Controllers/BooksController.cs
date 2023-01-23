@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVC_CRUD.Data;
 using MVC_CRUD.Models;
@@ -7,12 +8,21 @@ using MVC_CRUD.Models.Domain;
 
 namespace MVC_CRUD.Controllers
 {
+    public static class StringExt
+    {
+        public static string Truncate(this string value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value)) return value;
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength);
+        }
+    }
+    [Authorize]
     public class BooksController : Controller
 
     {
         private readonly MVCDbContext dbContext;
         private readonly IWebHostEnvironment hostEnvironment;
-        public BooksController(MVCDbContext mvcDbContext, IWebHostEnvironment hostEnvironment )
+        public BooksController(MVCDbContext mvcDbContext, IWebHostEnvironment hostEnvironment)
         {
             this.dbContext = mvcDbContext;
             this.hostEnvironment = hostEnvironment;
@@ -21,22 +31,32 @@ namespace MVC_CRUD.Controllers
         public async Task<IActionResult> Index()
         {
             var books = await dbContext.Books.Where(b => b.Visible == true).ToListAsync();
+            foreach (Book b in books)
+            {
+                b.Description = b.Description.Truncate(150);
+            }
             return View(books);
         }
+
+
         [HttpGet]
         public async Task<IActionResult> IndexAdmin()
         {
             var books = await dbContext.Books.ToListAsync();
+            foreach (Book b in books)
+            {
+                b.Description = b.Description.Truncate(150);
+            }
             return View(books);
         }
         [HttpGet]
         public async Task<IActionResult> View(Guid id)
         {
-            var book =await dbContext.Books.FirstOrDefaultAsync(x => x.BookId == id);
+            var book = await dbContext.Books.FirstOrDefaultAsync(x => x.BookId == id);
 
-            if(book!=null)
+            if (book != null)
             {
-                return await Task.Run(() => View("View",book));
+                return await Task.Run(() => View("View", book));
             }
 
             return RedirectToAction("Index");
@@ -89,7 +109,7 @@ namespace MVC_CRUD.Controllers
 
             await dbContext.Books.AddAsync(book);
             await dbContext.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexAdmin");
         }
 
         [HttpGet]
@@ -130,12 +150,19 @@ namespace MVC_CRUD.Controllers
             var book = await dbContext.Books.FirstOrDefaultAsync(x => x.BookId == id);
             if (book != null)
             {
-                book.Visible = true;
+                if (book.Visible == true)
+                {
+                    book.Visible = false;
+                }
+                else
+                {
+                    book.Visible = true;
+                }
                 await dbContext.SaveChangesAsync();
             }
+
             return RedirectToAction("IndexAdmin");
         }
-
 
     }
 }

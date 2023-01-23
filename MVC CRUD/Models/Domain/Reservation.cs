@@ -11,6 +11,7 @@ namespace MVC_CRUD.Models.Domain
         public DateTime endDate { get; set; }
         public int daysLeft { get; set; }
         public bool is_finished { get; set; }
+        public BookState BookState { get; set; }
      
         public Guid BookId { get; set; } 
         public Guid UserId { get; set; }
@@ -19,5 +20,13 @@ namespace MVC_CRUD.Models.Domain
         [ForeignKey("BookId")]
 
         public virtual Book Book { get; set; }
+
+    }
+
+    public enum BookState
+    {
+        Ongoing,
+        Pending,
+        Finished,
     }
 }

@@ -3,6 +3,7 @@ using MVC_CRUD.Data;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Configuration;
+using MVC_CRUD.Models.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ string connectionString = builder.Configuration.GetConnectionString("MvcConnecti
 
 builder.Services.AddDbContext<MVCDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MVCDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MVCDbContext>();
 
 
 

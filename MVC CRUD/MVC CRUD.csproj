@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="Areas\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Views\Authentication\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 

@@ -309,6 +309,8 @@
                                             <th scope="col">    </th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Category</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
                                             
                                         </tr>
                                     </thead>
@@ -344,10 +346,42 @@
                                                         </div>
                                                     </div>
                                                 </td>
+                                              
                                                 <td>
                                                     <div class="r-no">
                                                         <span>@item.Book.Category</span>
                                                     </div>
+                                                </td>
+                                                <td>
+                                                    <div class="r-no">
+                                                        <span>@item.BookState</span>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="r-no">
+                                                        @if (item.BookState == MVC_CRUD.Models.Domain.BookState.Pending && item.is_finished == false)
+                                                        {
+                                                            <button type="submit" onclick="location.href='@Url.Action("ChangeState", "Reservation",new {id=@item.ReservationId})'" id="submit" name="submit" class="btn btn-warning ">Accept reservation</button>
+                                                        }
+                                                        else if (item.BookState == MVC_CRUD.Models.Domain.BookState.Pending && item.is_finished == true)
+                                                        {
+                                                            <button type="submit" onclick="location.href='@Url.Action("ChangeState", "Reservation",new {id=@item.ReservationId})'" id="submit" name="submit" class="btn btn-primary ">Accept return</button>
+                                                        }
+                                                        else 
+                                                        {
+                                                           
+                                                                <button  id="submit" name="submit" class="btn btn-secondary ">No action</button>
+                                                            
+                                                        }
+
+                                                    </div>
+                                                    <div class="r-no">
+                                                        <button type="submit" onclick="location.href='@Url.Action("Delete", "Reservation",new {id=@item.ReservationId})'" id="submit" name="submit" class="btn btn-danger ">Delete</button>
+
+
+                                                    </div>
+                                                    
                                                 </td>
                                                
                                             </tr>
